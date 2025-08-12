@@ -1,59 +1,107 @@
-import { useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import './App.css';
-import Dice from'./Dice.js';
-import { nanoid } from "nanoid"
+import Dice from './Dice.js';
+import { nanoid } from "nanoid";
+import Confetti from 'react-confetti';
 
 function App() {
+  const [dice, setDice] = useState(generateAllNewDice());
+  const [gameWon, setGameWon] = useState(false);
+  const FocusRef = useRef();
 
-  const [dice, setDice] = useState(generateAllNewDice())
   function generateAllNewDice() {
-    return new Array(10) // 1️⃣ create an empty array with 10 slots
-      .fill(0)           // 2️⃣ fill it with zeroes so it can be iterated over
-      .map(() => ({      // 3️⃣ map over each slot and return an object
-        value: Math.ceil(Math.random() * 6), // 4️⃣ random number 1–6
-        frozen: false,                       // 5️⃣ default "not held"
-        id: nanoid()                          // 6️⃣ unique ID for React key
+    return new Array(10)
+      .fill(0)
+      .map(() => ({
+        value: Math.ceil(Math.random() * 6),
+        frozen: false,
+        id: nanoid()
       }));
   }
-
 
   function getRandomDiceNumber() {
     return Math.floor(Math.random() * 6) + 1;
   }
 
-  function rollDice(){
-    setDice(prev => 
-      prev.map(die => die.frozen ? die : {...die, value: getRandomDiceNumber()})
-    )
+  function rollDice() {
+    setDice(prev =>
+      prev.map(die => die.frozen ? die : { ...die, value: getRandomDiceNumber() })
+    );
   }
 
   function toggleFreeze(id) {
     setDice(prev =>
-      prev.map(die => (die.id === id ? {...die, frozen : !die.frozen}: die))
+      prev.map(die =>
+        die.id === id ? { ...die, frozen: !die.frozen } : die
+      )
     );
-    console.log("freeze")
+    console.log("freeze");
   }
 
+  function newGame() {
+    setDice(generateAllNewDice());
+  }
 
+  useEffect(() => {
+    const allFrozen = dice.every(die => die.frozen);
+    const allSameValue = dice.every(die => die.value === dice[0].value);
 
-  
+    if (allFrozen && allSameValue) {
+      console.log("Game won!");
+      setGameWon(true);
+    } else {
+      setGameWon(false);
+    }
+  }, [dice]);
+
+  useEffect(() => {
+    if (gameWon && FocusRef.current) {
+      FocusRef.current.focus();
+    }
+  }, [gameWon]);
+
   return (
-      <main>
-        <h2>Tenzies</h2>
-        <p> Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
-          <div className="dice-container">
-            {dice.map(dieObj => (
-              <Dice
-                key={dieObj.id}
-                number={dieObj.value}
-                isFrozen={dieObj.frozen}
-                onClick={() => toggleFreeze(dieObj.id)}
-              />
-            ))}
-          </div>
+    <main>
+      {gameWon && <Confetti />}
 
-        < button className="roll-button" onClick={rollDice}>Roll</button>  
-        </main>
+      <div aria-live="polite" className="sr-only">
+        {gameWon && <p>Congratulations! You won! Press "New Game" to start again.</p>}
+      </div>
+
+      <h2>Tenzies</h2>
+      <p>
+        Roll until all dice are the same. Click each die to freeze it at its current
+        value between rolls.
+      </p>
+
+      <div className="dice-container">
+        {dice.map(dieObj => (
+          <Dice
+            key={dieObj.id}
+            number={dieObj.value}
+            isFrozen={dieObj.frozen}
+            onClick={() => toggleFreeze(dieObj.id)}
+          />
+        ))}
+      </div>
+
+      {gameWon ? (
+        <button
+          className="roll-button"
+          ref={FocusRef}
+          onClick={newGame}
+        >
+          New Game
+        </button>
+      ) : (
+        <button
+          className="roll-button"
+          onClick={rollDice}
+        >
+          Roll
+        </button>
+      )}
+    </main>
   );
 }
 
