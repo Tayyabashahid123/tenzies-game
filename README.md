@@ -47,7 +47,7 @@ npm install
 
 # Run locally
 npm start
-
+```
 
 Game Flow
 
