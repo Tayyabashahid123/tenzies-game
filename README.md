@@ -1,70 +1,73 @@
-# Getting Started with Create React App
+# Tenzies – React Dice Game
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[Live Demo](https://dice-tenziess.netlify.app)
 
-## Available Scripts
+A fun and interactive **Tenzies** game built with React. Roll dice, hold values, and try to get all ten dice to match. Includes win detection, a “New Game” flow, confetti, accessibility enhancements, and more!
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## ​​ Gameplay
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Roll until all dice show the same value.
+- Click a die to “freeze” it—frozen dice won’t change when you roll again.
+- Once all dice are frozen and match, confetti plays 🎉 and the **New Game** button appears.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## ​ Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **React functional components** with `useState`, `useEffect`, and `useRef`.
+- **Confetti animation** on win using `react-confetti`.
+- **Accessibility enhancements**:
+  - `aria-pressed` and `aria-label` for dice buttons.
+  - Focus automatically shifts to the “New Game” button after winning.
+  - Announcements with `aria-live` for screen readers.
+- **Clean, modular code** with `Dice` component and state well structured.
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+##  Tech Stack
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- React
+- nanoid (for unique IDs)
+- react-confetti
+- Vanilla CSS
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+##  Setup & Usage
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+# Clone the repo
+git clone https://github.com/Tayyabashahid123/tenzies-game.git
+cd tenzies-game
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# Install dependencies
+npm install
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# Run locally
+npm start
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+Game Flow
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+| Step | Description                                            |
+| ---- | ------------------------------------------------------ |
+| 1    | Roll dice using the “Roll” button                      |
+| 2    | Click individual dice to freeze/unfreeze them          |
+| 3    | Game detects win when all dice match and are frozen    |
+| 4    | Confetti animation plays and “New Game” button appears |
+| 5    | Focus shifts to “New Game” button for accessibility    |
+| 6    | Click “New Game” to reset dice and play again          |
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+------------
 
-### Code Splitting
+Accessibility Enhancements
+Proper use of aria-pressed, aria-label, and aria-live to ensure full screen reader support.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Focus management ensures new UI elements are keyboard-navigable.
 
-### Analyzing the Bundle Size
+---------
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Live Demo
+Check it out: dice-tenziess.netlify.app
